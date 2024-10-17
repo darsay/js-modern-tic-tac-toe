@@ -3,28 +3,60 @@ class Game {
         this.ctx = ctx;
         this.gameObjects = [];
 
-        this.gameLoopId = null;
+        this.previousUpdateTime = 0;
+        this.previousDrawTime = 0;
 
-        this.previousTime = new Date().getTime();
+        this.isRunning = false;
     }
 
     start() {
-        this.addGameObject(ctx, "Fulanito", new Vector2D(5, 69));
+        this.initEntities();
 
-        this.gameObjects[0].addComponent(new SpriteRenderer(ctx, ""));
-
-        this.gameLoopId = setInterval(() => this.gameLoop(), 1000 / 60);
+        this.isRunning = true;
+        requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    gameLoop() {
-        const currentTime = new Date().getTime();
-        const deltaTime = currentTime - this.previousTime;
-        this.previousTime = currentTime;
+    initEntities() {
+        this.addGameObject(ctx, "Fulanito", new Vector2D(0, 0));
 
-        console.log(deltaTime);
+        this.gameObjects[0].addComponent(new InfiniteSpriteScrollRenderer(ctx,
+            "assets/images/placeholders/bg.png",
+            new Vector2D(600, 600),
+            new Vector2D(1, 1),
+            60
+        ));
+    }
+
+    gameLoop(timeStamp) {
+        if(!this.isRunning) return;
+
+        const deltaTime = (timeStamp - this.previousUpdateTime) / 1000;
+        this.previousUpdateTime = timeStamp;
+
+        this.update(deltaTime);
+
+        if(timeStamp - this.previousDrawTime >= 1000 / FRAME_RATE) {
+            this.draw();
+            this.previousDrawTime = timeStamp;
+        }
+
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    update(deltaTime) {
+        console.log(`Delta time: ${deltaTime}.`);
 
         this.gameObjects.forEach(gO => {
             gO.update(deltaTime);
+        });
+    }
+
+    draw() {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+        console.log("Draw");
+
+        this.gameObjects.forEach(gO => {
+            gO.draw();
         });
     }
 

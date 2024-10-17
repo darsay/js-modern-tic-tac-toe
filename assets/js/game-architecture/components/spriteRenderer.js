@@ -1,9 +1,10 @@
-class SpriteRenderer extends Component {
-    constructor(ctx, spriteUrl) {
+class SpriteRenderer extends RendererComponent {
+    constructor(ctx, spriteUrl, dimensions) {
         super(ctx);
         this.type = "SpriteRenderer";
 
         this.setSprite(spriteUrl);
+        this.dimensions = dimensions;
     }
 
     setSprite(url) {
@@ -13,5 +14,14 @@ class SpriteRenderer extends Component {
 
     update(deltaTime) {
         super.update(deltaTime);
+    }
+
+    draw(position) {
+        ctx.drawImage(this.sprite,
+            position.x,
+            position.y,
+            this.dimensions.x,
+            this.dimensions.y
+        );
     }
 }
