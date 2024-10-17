@@ -24,6 +24,9 @@ gameCanvas.addEventListener("mousemove", (e) =>{
 });
 
 gameCanvas.addEventListener("click", () => InputManager.executeInput("click"));
+gameCanvas.addEventListener("keydown", (e) => InputManager.executeInput(`${e.key}-down`));
+gameCanvas.addEventListener("keyup", (e) => InputManager.executeInput(`${e.key}-up`));
+gameCanvas.addEventListener("keypress", (e) => InputManager.executeInput(`${e.key}-press`));
 
 
 
