@@ -6,6 +6,5 @@ class Component {
     }
 
     update(deltaTime) {
-        console.log(`Update component ${this.type}`);
     }
 }

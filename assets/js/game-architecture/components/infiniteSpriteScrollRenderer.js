@@ -9,7 +9,6 @@ class InfiniteSpriteScrollRenderer extends SpriteRenderer {
     }
 
     update(deltaTime) {
-        console.log("COÑOOO")
         this.offset.x += this.speed * deltaTime;
         this.offset.y += this.speed * deltaTime;
 

@@ -19,8 +19,6 @@ class GameObject {
     }
 
     update(deltaTime) {
-        console.log(`Update ${this.name} which is at position ${this.position.x}, ${this.position.y}`);
-
         this.components.forEach(component => component.update(deltaTime));
     }
 
