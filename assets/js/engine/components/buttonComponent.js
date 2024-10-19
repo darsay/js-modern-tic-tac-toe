@@ -1,14 +1,18 @@
 class ButtonComponent extends Component {
-    constructor(ctx, position, dimensions) {
-        super(ctx);
+    constructor() {
+        super();
         this.type = "ButtonComponent";
+        this.callback = null;   
+    }
 
-        this.position = position;
-        this.dimensions = dimensions;
+    init(gameObject) {
+        super.init(gameObject);
+
+        this.position = this.gameObject.position;
+        this.dimensions = this.gameObject.dimensions;
 
         InputManager.addInputCallback("click", () => this.clickButton());
     }
-
     
     
     checkIfMouseOver() {
@@ -31,11 +35,11 @@ class ButtonComponent extends Component {
 
     clickButton() {
         if(this.checkIfMouseOver()){
-            console.log("Click");
+            // console.log(`Button from ${this.gameObject.name} pressed!`);
+            this.callback();
         }
     }
 
     update(deltaTime) {
-        console.log(InputManager.mousePos);
     }
 }

@@ -1,4 +1,4 @@
-class Game {
+class GameEngine {
     constructor(ctx) {
         this.ctx = ctx;
         this.gameObjects = [];
@@ -10,41 +10,10 @@ class Game {
     }
 
     start() {
-        this.initEntities();
-
         this.isRunning = true;
         requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    initEntities() {
-        const bg = new GameObject(ctx, "Bg", new Vector2D(0, 0));
-
-        bg.addComponent(new InfiniteSpriteScrollRenderer(
-            ctx,
-            "assets/images/placeholders/bg.png",
-            new Vector2D(600, 600),
-            new Vector2D(1, 1),
-            10
-        ));
-
-        this.addGameObject(bg);
-
-        const button = new GameObject(ctx, "Button", new Vector2D(0, 0));     
-
-        button.addComponent(new ButtonComponent(
-            ctx,
-            new Vector2D(0, 0),
-            new Vector2D(300, 300),
-        ));
-
-        button.addComponent(new SpriteRenderer(
-            ctx,
-            "assets/images/placeholders/bg.png",
-            new Vector2D(300, 300),
-        ));
-
-        this.addGameObject(button);
-    }
 
     gameLoop(timeStamp) {
         if(!this.isRunning) return;
@@ -64,7 +33,9 @@ class Game {
 
     update(deltaTime) {
         this.gameObjects.forEach(gO => {
-            gO.update(deltaTime);
+            if(gO.isActive) {
+                gO.update(deltaTime);
+            }
         });
     }
 

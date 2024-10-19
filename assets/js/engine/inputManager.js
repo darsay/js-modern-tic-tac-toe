@@ -29,9 +29,6 @@ gameCanvas.addEventListener("keyup", (e) => InputManager.executeInput(`${e.key}-
 gameCanvas.addEventListener("keypress", (e) => InputManager.executeInput(`${e.key}-press`));
 
 
-
-
-
 class InputManager {
     static isMouseOver = false;
     static mousePos = null;
