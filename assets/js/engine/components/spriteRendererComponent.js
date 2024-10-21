@@ -1,9 +1,10 @@
 class SpriteRenderer extends RendererComponent {
-    constructor(spriteUrl) {
+    constructor(spriteUrl, alpha = 1) {
         super();
         this.type = "SpriteRenderer";
 
-        if(spriteUrl) this.setSpriteUrl(spriteUrl);   
+        if(spriteUrl) this.setSpriteUrl(spriteUrl);  
+        this.alpha = alpha;
     }
 
     init(gameObject) {
@@ -19,11 +20,17 @@ class SpriteRenderer extends RendererComponent {
         this.sprite.src = url;
     }
 
+    setAlpha(alpha) {
+        this.alpha = alpha;
+    }
+
     update(deltaTime) {
         super.update(deltaTime);
     }
 
     draw() {
+        this.gameObject.ctx.globalAlpha = this.alpha;
+
         this.gameObject.ctx.drawImage(this.sprite,
             this.offset.x,
             this.offset.y,
@@ -34,6 +41,8 @@ class SpriteRenderer extends RendererComponent {
             this.gameObject.dimensions.x,
             this.gameObject.dimensions.y
         );
+
+        this.gameObject.ctx.globalAlpha = 1;
     }
 
     updateCropSettings(cropPos, cropDimensions) {

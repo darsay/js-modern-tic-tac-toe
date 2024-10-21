@@ -60,7 +60,9 @@ class TicTacToeGame {
         let buttonComponent1 = new ButtonComponent();
         button.addComponent(buttonComponent1);
 
-        button.addComponent(new SpriteRenderer());
+        let sr1 = new SpriteRenderer();
+        button.addComponent(sr1);
+
         button.addComponent(
             new AnimationComponent(
                 "assets/images/tictacsprites-Sheet.png",
@@ -72,7 +74,9 @@ class TicTacToeGame {
 
         this.gameEngine.addGameObject(button);
 
-        buttonComponent1.callback = function() {console.log(`Button from ${this.gameObject.name} pressed!`)};
+        buttonComponent1.buttonPressCallback = function() {console.log(`Button from ${this.gameObject.name} pressed!`)};
+        buttonComponent1.mouseOverCallback = () => sr1.setAlpha(0.5);
+        buttonComponent1.mouseExitCallback = () => sr1.setAlpha(1);
 
         const button2 = new GameObject(
             ctx,
@@ -96,8 +100,10 @@ class TicTacToeGame {
                 new Vector2D(64,64)
             ));
 
+        button2.addComponent(new SpriteFlicker(0.5, 0.3));
+
         this.gameEngine.addGameObject(button2);
-        buttonComponent2.callback = () => sR.isActive = false;
+        buttonComponent2.buttonPressCallback = () => sR.isActive = false;
     }
 
 }

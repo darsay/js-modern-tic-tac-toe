@@ -2,7 +2,12 @@ class ButtonComponent extends Component {
     constructor() {
         super();
         this.type = "ButtonComponent";
-        this.callback = null;   
+        this.buttonPressCallback = null; 
+
+        this.mouseOverCallback = null;
+        this.mouseExitCallback = null;  
+
+        this.isMouseOver = false;
     }
 
     init(gameObject) {
@@ -27,19 +32,28 @@ class ButtonComponent extends Component {
             mousePos.y >= this.position.y &&
             mousePos.y <= this.position.y + this.dimensions.y
         ) {
+            if(this.mouseOverCallback && !this.mouseIsOver) {
+                this.mouseIsOver = true;
+                this.mouseOverCallback();
+            }
             return true;
         } else {
+            if(this.mouseExitCallback && this.mouseIsOver) {
+                this.mouseIsOver = false;
+                this.mouseExitCallback();
+            }
             return false;
         }
     }
 
     clickButton() {
-        if(this.checkIfMouseOver()){
+        if(this.mouseIsOver){
             // console.log(`Button from ${this.gameObject.name} pressed!`);
-            this.callback();
+            this.buttonPressCallback();
         }
     }
 
     update(deltaTime) {
+        this.mouseIsOver = this.checkIfMouseOver()
     }
 }

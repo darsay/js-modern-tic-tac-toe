@@ -25,6 +25,8 @@ class GameObject {
         if(component.isRenderer) {
             this.renderer = component;
         }
+
+        return component;
     }
 
     update(deltaTime) {
